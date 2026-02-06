@@ -109,3 +109,37 @@ variable "node_disk_size" {
   default     = 20
 }
 
+variable "node_image_id" {
+  default = ""
+}
+
+variable "node_volume_type" {
+  default = "gp2"
+}
+
+variable "bootstrap_arguments" {
+  default = ""
+}
+
+variable "disable_imdsv1" {
+  default = false
+}
+
+variable "node_asg_desired_capacity" {
+  default = 3
+}
+variable "node_asg_min_size" {
+  default = 1
+}
+variable "node_asg_max_size" {
+  default = 4
+}
+
+variable "node_group_name" {
+  default = "eks-demo-node"
+
+}
+
+variable "k8s_version" {
+  default = "1.24"
+}
