@@ -26,7 +26,10 @@ resource "aws_launch_template" "node_launch_template" {
   user_data = base64encode(<<EOT
 #!/bin/bash
 set -o xtrace
+export AWS_DEFAULT_REGION=${var.aws_region}
 /etc/eks/bootstrap.sh ${var.cluster_name} ${var.bootstrap_arguments}
+  --apiserver-endpoint ${local.cluster_endpoint} \
+  --b64-cluster-ca ${local.cluster_ca}
 EOT
   )
 

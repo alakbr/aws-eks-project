@@ -14,4 +14,7 @@ locals {
 
   # Full EKS cluster name used for resource naming and tagging
   eks_cluster_name = "demo-eks" # Example: "retail-dev-eksdemo"
+
+  cluster_endpoint = aws_eks_cluster.main.endpoint
+  cluster_ca       = aws_eks_cluster.main.certificate_authority[0].data
 }

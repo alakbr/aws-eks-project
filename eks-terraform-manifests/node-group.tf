@@ -1,11 +1,3 @@
-data "aws_eks_cluster" "cluster" {
-  name = "demo-eks"
-}
-
-data "aws_eks_cluster_auth" "cluster" {
-  name = data.aws_eks_cluster.cluster.name
-}
-
 # Security Group for nodes
 resource "aws_security_group" "node_sg" {
   name   = "${var.cluster_name}-node-sg"
@@ -28,27 +20,16 @@ resource "aws_security_group_rule" "node_to_node" {
   description              = "Allow node to communicate with each other"
 }
 
-# # Nodes -> Control Plane
-# resource "aws_security_group_rule" "node_to_cp" {
-#   type                     = "egress"
-#   from_port                = 443
-#   to_port                  = 443
-#   protocol                 = "tcp"
-#   security_group_id        = aws_security_group.node_sg.id
-#   source_security_group_id = aws_eks_cluster.main.vpc_config[0].cluster_security_group_id
-#   description              = "Allow pods to communicate with cluster API Server"
-# }
-
-resource "aws_security_group_rule" "node_to_internet" {
-  type      = "egress"
-  from_port = 0
-  to_port   = 0
-  protocol  = "-1"
-
-  security_group_id = aws_security_group.node_sg.id
-  cidr_blocks       = ["0.0.0.0/0"]
+# Nodes -> Control Plane
+resource "aws_security_group_rule" "node_to_cp" {
+  type                     = "ingress"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
+  security_group_id        = aws_eks_cluster.main.vpc_config[0].cluster_security_group_id
+  source_security_group_id = aws_security_group.node_sg.id
+  description              = "Allow pods to communicate with cluster API Server"
 }
-
 
 # Control plane -> Nodes
 resource "aws_security_group_rule" "cp_to_nodes" {
