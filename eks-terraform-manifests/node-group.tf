@@ -11,13 +11,13 @@ resource "aws_security_group" "node_sg" {
 # Node security group ingress/egress rules
 # Nodes can talk to each other
 resource "aws_security_group_rule" "node_to_node" {
-  type                     = "ingress"
-  from_port                = 0
-  to_port                  = 65535
-  protocol                 = "tcp"
-  self                     = true
-  security_group_id        = aws_security_group.node_sg.id
-  description              = "Allow node to communicate with each other"
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 65535
+  protocol          = "tcp"
+  self              = true
+  security_group_id = aws_security_group.node_sg.id
+  description       = "Allow node to communicate with each other"
 }
 
 # Nodes -> Control Plane
@@ -50,4 +50,14 @@ resource "aws_security_group_rule" "cp_to_nodes_on_443" {
   security_group_id        = aws_security_group.node_sg.id
   source_security_group_id = aws_eks_cluster.main.vpc_config[0].cluster_security_group_id
   description              = "Allow pods running extension API servers on port 443 to receive communication from cluster control plane"
+}
+
+resource "aws_security_group_rule" "node_to_eks_api" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.node_sg.id
+  description       = "Allow nodes outbound access"
 }

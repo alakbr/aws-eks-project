@@ -13,8 +13,8 @@ resource "aws_launch_template" "node_launch_template" {
     device_name = "/dev/xvda"
 
     ebs {
-      volume_size = var.node_disk_size
-      volume_type = var.node_volume_type
+      volume_size           = var.node_disk_size
+      volume_type           = var.node_volume_type
       delete_on_termination = true
     }
   }
@@ -34,8 +34,8 @@ EOT
   )
 
   metadata_options {
-    http_endpoint = "enabled"
-    http_tokens   = var.disable_imdsv1 ? "required" : "optional"
+    http_endpoint               = "enabled"
+    http_tokens                 = var.disable_imdsv1 ? "required" : "optional"
     http_put_response_hop_limit = 2
   }
 }
@@ -47,9 +47,9 @@ data "aws_ssm_parameter" "eks_ami" {
 
 # Auto Scaling Group
 resource "aws_autoscaling_group" "node_group_asg" {
-  desired_capacity = var.node_asg_desired_capacity
-  max_size         = var.node_asg_max_size
-  min_size         = var.node_asg_min_size
+  desired_capacity    = var.node_asg_desired_capacity
+  max_size            = var.node_asg_max_size
+  min_size            = var.node_asg_min_size
   vpc_zone_identifier = data.terraform_remote_state.vpc.outputs.private_subnet_ids
 
   launch_template {
