@@ -29,3 +29,7 @@ variable "subnet_newbits" {
   type        = number
   default     = 8
 }
+
+variable "key_pair_name" {
+  default = "node-key-pair"
+}
