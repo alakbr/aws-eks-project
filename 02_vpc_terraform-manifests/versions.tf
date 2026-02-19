@@ -8,7 +8,7 @@ terraform {
   }
   # Remote Backend
   backend "s3" {
-    bucket  = "aliakber-terraform-state-backend"
+    bucket  = "aliakber-terraform-state-backend2"
     key     = "vpc/dev/terraform.tfstate"
     region  = "us-east-2"
     encrypt = true

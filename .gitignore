@@ -37,3 +37,4 @@ __pycache__/
 # Docker
 *.env
 eks-terraform-manifests/aws-auth-cm.yaml
+bootstrap/node-key-pair.pub

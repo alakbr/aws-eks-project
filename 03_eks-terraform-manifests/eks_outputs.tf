@@ -43,3 +43,8 @@ output "eks_sg" {
 
 }
 
+output "node_group_security_group" {
+  value       = aws_security_group.node_sg.id
+  description = "Security Group ID used by EKS worker nodes"
+
+}

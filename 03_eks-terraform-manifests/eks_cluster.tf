@@ -67,4 +67,14 @@ resource "aws_eks_cluster" "main" {
 
 }
 
+resource "null_resource" "update_kubeconfig" {
+
+  provisioner "local-exec" {
+    command = "aws eks update-kubeconfig --region us-east-2 --name demo-eks"
+  }
+
+  depends_on = [
+    aws_eks_cluster.main
+  ]
+}
 

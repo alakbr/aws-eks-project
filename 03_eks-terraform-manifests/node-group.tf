@@ -11,13 +11,13 @@ resource "aws_security_group" "node_sg" {
 # Node security group ingress/egress rules
 # Nodes can talk to each other
 resource "aws_security_group_rule" "node_to_node" {
-  type                     = "ingress"
-  from_port                = 0
-  to_port                  = 0
-  protocol                 = "-1"
-  self                     = true
-  security_group_id         = aws_security_group.node_sg.id
-  description              = "Allow node-to-node communication"
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  self              = true
+  security_group_id = aws_security_group.node_sg.id
+  description       = "Allow node-to-node communication"
 }
 
 # Nodes -> Control Plane
